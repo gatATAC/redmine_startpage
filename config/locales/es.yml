@@ -1,0 +1,4 @@
+# Spanish strings go here for Rails i18n
+es:
+  label_setting_examples: Vea algunos ejemplos de configuración en
+  label_example_url: http://gatatac.net/projects/redminewikistartpage/wiki
