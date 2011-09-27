@@ -1,25 +1,25 @@
 <p>
-  <label>Active?</label>
+  <label><%= l(:label_startpage_active) %> </label>
   <%= check_box_tag 'settings[startpage_active]', 1, @settings['startpage_active'] %>
 </p>
 <p>
-  <label>Controller</label>
+  <label><%= l(:label_startpage_controller) %></label>
   <%= text_field_tag 'settings[startpage_controller]', @settings['startpage_controller'] %>
 </p>
 <p>
-  <label>Action</label>
+  <label><%= l(:label_startpage_action) %></label>
   <%= text_field_tag 'settings[startpage_action]', @settings['startpage_action'] %>
 </p>
 <p>
-  <label>Id</label>
+  <label><%= l(:label_startpage_id) %></label>
   <%= text_field_tag 'settings[startpage_id]', @settings['startpage_id'] %>
 </p>
 <p>
-  <label>Extra argument name</label>
+  <label><%= l(:label_startpage_argname) %></label>
   <%= text_field_tag 'settings[startpage_argname]', @settings['startpage_argname'] %>
 </p>
 <p>
-  <label>Extra argument value</label>
+  <label><%= l(:label_startpage_argvalue) %></label>
   <%= text_field_tag 'settings[startpage_argvalue]', @settings['startpage_argvalue'] %>
 </p>
 

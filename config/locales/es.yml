@@ -2,3 +2,9 @@
 es:
   label_setting_examples: Vea algunos ejemplos de configuración en
   label_example_url: http://gatatac.net/projects/redminewikistartpage/wiki
+  label_startpage_active: Activado?
+  label_startpage_controller: Controlador
+  label_startpage_action: Acción
+  label_startpage_id: Id
+  label_startpage_argname: Nombre del argumento extra
+  label_startpage_argvalue: Valor del argumento extra
