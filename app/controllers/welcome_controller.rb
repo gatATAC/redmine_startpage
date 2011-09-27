@@ -5,7 +5,8 @@ class WelcomeController < ApplicationController
 
   def forward_to_startpage
     
-    if (Setting.plugin_redmine_startpage['startpage_active'])
+    if (Setting.plugin_redmine_startpage['startpage_active'] && 
+          !Setting.plugin_redmine_startpage['startpage_controller'].blank?)
       if (Setting.plugin_redmine_startpage['startpage_action'].blank?)
         action_to_redirect = nil
       else

@@ -15,5 +15,5 @@ Redmine::Plugin.register :redmine_startpage do
     'startpage_id' => '',
     'startpage_argname' => '',
     'startpage_argvalue' => ''
-  }, :partial => 'settings/startpage_settings'  
+  }, :partial => 'settings/startpage_settings'
 end
