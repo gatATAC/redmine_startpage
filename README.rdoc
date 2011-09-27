@@ -1,3 +1,23 @@
-= wiki_startpage
+= startpage
 
-Description goes here
+This is a plugin for Redmine.  It allows the user to select almost any redmine sub page as start page for a Redmine website
+
+Some examples are:
+If the starting page must be this one (http://gatatac.net/projects/redminewikistartpage/wiki), then
+
+    Controller: projects
+    Action: redminewikistartpage
+    Id: wiki
+    Extra argument name must be an empty string.
+    Extra argument value must be an empty string.
+
+If the starting page must be the books index for this project (http://gatatac.net/books?project_id=redminewikistartpage), then
+
+    Controller: books
+    Action must be an empty string.
+    Id must be an empty string.
+    Extra argument name: project_id.
+    Extra argument value: redminewikistartpage.
+
+Github repository: https://github.com/txinto/redmine_startpage
+Install instructions http://www.redmine.org/projects/redmine/wiki/Plugins
