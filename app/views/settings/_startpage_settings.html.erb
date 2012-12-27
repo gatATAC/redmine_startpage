@@ -23,5 +23,5 @@
   <%= text_field_tag 'settings[startpage_argvalue]', @settings['startpage_argvalue'] %>
 </p>
 
-<%=  l(:label_setting_examples)+" "+link_to(l(:label_example_url),l(:label_example_url)) %>
+<%= l(:label_setting_examples) %><%= link_to l(:label_example_url), l(:label_example_url), :target => "_blank" %>
 
