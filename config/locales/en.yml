@@ -1,7 +1,7 @@
 # English strings go here for Rails i18n
 en:
-  label_setting_examples: See some configuration examples at
-  label_example_url: http://gatatac.net/projects/redminewikistartpage/wiki
+  label_setting_examples: "See some configuration examples at "
+  label_example_url: https://github.com/txinto/redmine_startpage
   label_startpage_active: Active?
   label_startpage_controller: Controller
   label_startpage_action: Action
