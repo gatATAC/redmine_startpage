@@ -5,11 +5,19 @@ This is a plugin for Redmine.  It allows the user to select almost any redmine s
 Some examples are:
 If the starting page must be this one (http://gatatac.net/projects/redminewikistartpage/wiki), then
 
+Redmine 1.x
     Controller: projects
     Action: redminewikistartpage
     Id: wiki
     Extra argument name must be an empty string.
     Extra argument value must be an empty string.
+
+Redmine 2.x
+    Controller: wiki
+    Action: show
+    Id: wiki (name of the topic to show)
+    Extra argument name: project_id
+    Extra argument value: redminewikistartpage
 
 If the starting page must be the books index for this project (http://gatatac.net/books?project_id=redminewikistartpage), then
 
