@@ -1,0 +1,10 @@
+# German strings go here for Rails i18n
+de:
+  label_setting_examples: "Konfigurationsbeispiele "
+  label_example_url: https://github.com/txinto/redmine_startpage
+  label_startpage_active: Aktiv?
+  label_startpage_controller: Controller
+  label_startpage_action: Action
+  label_startpage_id: Id
+  label_startpage_argname: Name des Arguments
+  label_startpage_argvalue: Wert des Arguments 
