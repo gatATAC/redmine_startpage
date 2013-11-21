@@ -21,3 +21,4 @@ Redmine 2.x
 
 Github repository: https://github.com/txinto/redmine_startpage
 Install instructions http://www.redmine.org/projects/redmine/wiki/Plugins
+Homepage: http://gatatac.org/projects/redmine-startpage/wiki
