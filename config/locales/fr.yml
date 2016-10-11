@@ -1,0 +1,10 @@
+# French strings go here for Rails i18n
+fr:
+  label_setting_examples: "Documentation disponible à l'adresse suivante : "
+  label_example_url: https://github.com/txinto/redmine_startpage
+  label_startpage_active: Actif ?
+  label_startpage_controller: Contrôleur
+  label_startpage_action: Action
+  label_startpage_id: Id
+  label_startpage_argname: "Argument supplémentaire : nom"
+  label_startpage_argvalue: "Argument supplémentaire : valeur"
