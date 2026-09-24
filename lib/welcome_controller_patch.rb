@@ -1,57 +1,31 @@
- module WelcomeControllerPatch
-    def self.included(base) # :nodoc:
-      base.send(:include, InstanceMethods)
+# frozen_string_literal: true
 
-      base.class_eval do
+module WelcomeControllerPatch
+  def self.prepended(base)
+    base.before_action :redirect_to_configured_startpage, only: :index
+  end
 
-	    before_action :forward_to_startpage, :only => :index
-	  
-      end
-    end
+  private
 
-    module InstanceMethods
-	  def forward_to_startpage
-		
-		if (Setting.plugin_redmine_startpage['startpage_active'] && 
-			  !Setting.plugin_redmine_startpage['startpage_controller'].blank?)
-		  if (Setting.plugin_redmine_startpage['startpage_action'].blank?)
-			action_to_redirect = nil
-		  else
-			action_to_redirect = Setting.plugin_redmine_startpage['startpage_action']
-		  end
-		
-		  if (Setting.plugin_redmine_startpage['startpage_id'].blank?)
-			id_to_redirect = nil
-		  else
-			id_to_redirect = Setting.plugin_redmine_startpage['startpage_id']
-		  end
-		
-		  if (Setting.plugin_redmine_startpage['startpage_argname'].blank? ||
-				Setting.plugin_redmine_startpage['startpage_argvalue'].blank?)
-			argname_to_redirect = nil
-			argvalue_to_redirect = nil
-		  else
-			argname_to_redirect = Setting.plugin_redmine_startpage['startpage_argname']
-			argvalue_to_redirect = Setting.plugin_redmine_startpage['startpage_argvalue']
-		  end
-		
-		  if (argname_to_redirect.nil?) 
-			redirect_to(
-			  :controller => Setting.plugin_redmine_startpage['startpage_controller'],
-			  :action => action_to_redirect,
-			  :id => id_to_redirect)
-		  else
-			redirect_to(
-			  :controller => Setting.plugin_redmine_startpage['startpage_controller'],
-			  :action => action_to_redirect,
-			  :id => id_to_redirect,
-			  argname_to_redirect => argvalue_to_redirect
-			)
-		  end
-		end
-	  end
-	end
+  def redirect_to_configured_startpage
+    settings = Setting.plugin_redmine_startpage || {}
+    return unless ActiveModel::Type::Boolean.new.cast(settings['startpage_active'])
+
+    controller = settings['startpage_controller'].to_s.strip
+    return if controller.blank?
+
+    target = { controller: controller }
+    action = settings['startpage_action'].to_s.strip
+    identifier = settings['startpage_id'].to_s.strip
+    argument_name = settings['startpage_argname'].to_s.strip
+    argument_value = settings['startpage_argvalue'].to_s.strip
+
+    target[:action] = action if action.present?
+    target[:id] = identifier if identifier.present?
+    target[argument_name] = argument_value if argument_name.present? && argument_value.present?
+
+    redirect_to target
+  rescue ActionController::UrlGenerationError => error
+    Rails.logger.error("redmine_startpage cannot generate its configured route: #{error.message}")
+  end
 end
-
-# Add module to Welcome Controller
-WelcomeController.send(:include, WelcomeControllerPatch)

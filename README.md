@@ -1,39 +1,23 @@
 # Redmine Startpage
 
-> **TODO — compatibility work pending:** the `main` branch is intended to host a future version compatible with current Redmine releases. That work has not been done yet. The present code is legacy software and should not be installed on a current Redmine instance without an explicit compatibility and security review.
+Redmine plugin that lets an administrator replace the standard Redmine home page with another internal Redmine page.
 
-Redmine plugin that lets an administrator replace the normal Redmine home page with a configurable internal destination.
+## Status
 
-## Repository status
+Version **0.2.0** targets **Redmine 7.0.1**. The plugin is intentionally small: it changes only the response of the global welcome page and does not alter projects or user preferences.
 
-- `archived` preserves the documented legacy implementation.
-- `main` is the starting point for a future adaptation to current Redmine releases.
-- The plugin declares version `0.1.0`.
-- No current Redmine version has been validated yet.
+The historical implementation remains available in the `archived` branch.
 
 ## Features
 
-The plugin adds a settings panel where an administrator can enable a custom start page and describe the target with Redmine routing parameters:
+From **Administration → Plugins → Redmine Startpage → Configure**, an administrator can:
 
-- controller;
-- action;
-- object or page identifier;
-- one optional parameter name;
-- one optional parameter value.
+- enable or disable the custom start page;
+- choose a Redmine controller and action;
+- provide an optional object or page identifier;
+- provide one optional parameter name and value.
 
-When enabled, a callback on `WelcomeController#index` redirects requests for the Redmine home page to that target. This can be used, for example, to open a particular project wiki page instead of the standard welcome page.
-
-The setting is global to the Redmine instance. It is not selected independently by project or by user.
-
-## Installation in the legacy environment
-
-The plugin directory must be named exactly `redmine_startpage`, because Redmine uses that path when locating the plugin settings partial.
-
-After placing the directory under `plugins/`, restart Redmine and configure the plugin from the administration interface.
-
-## Legacy configuration example
-
-To use the main wiki page of a project as the start page in the Redmine routing model for which this plugin was written:
+A typical configuration that opens a project wiki page is:
 
 - Controller: `wiki`
 - Action: `show`
@@ -41,22 +25,59 @@ To use the main wiki page of a project as the start page in the Redmine routing 
 - Extra argument name: `project_id`
 - Extra argument value: the project identifier
 
-The exact controller and route contract must be reviewed before this example is reused on a current Redmine release.
+The destination is global for the complete Redmine instance.
 
-## Limitations of the legacy code
+## Requirements
 
-- It patches `WelcomeController` directly with the inclusion pattern used by older Redmine versions.
-- It accepts raw controller, action and parameter names from global settings.
-- It does not validate that the configured route exists or is safe before redirecting.
-- A bad configuration can make the instance home page unusable or create a redirect loop.
-- It supports only one additional route parameter.
-- It has no meaningful automated test suite in this repository.
-- Compatibility with current Rails and Redmine autoloading and patching conventions has not been established.
+- Redmine 7.0.1 or later in the 7.x line.
+- Ruby and Rails versions supplied by that Redmine release.
 
-## Future adaptation
+## Installation
 
-A future implementation should retain the simple administrative purpose while validating destinations, preventing redirect loops, respecting current Redmine routing and plugin-loading conventions, and adding regression tests. The legacy code has deliberately not been ported yet.
+From the Redmine root:
 
-## License
+```bash
+git clone https://github.com/gatATAC/redmine_startpage.git plugins/redmine_startpage
+RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_startpage
+```
 
-This plugin is distributed under the GNU General Public License version 2. See the existing project history and license notices for details.
+Restart Redmine and configure the plugin from the administration interface. The directory must be named `redmine_startpage`.
+
+The plugin has no database migrations today; the migration command is included so installation remains consistent with normal Redmine plugin operations.
+
+## Upgrade from the legacy plugin
+
+1. Back up the Redmine database and files.
+2. Replace the plugin checkout with version 0.2.0 or a reviewed commit from `main`.
+3. Restart Redmine.
+4. Review the configured controller, action and arguments before enabling the redirect.
+5. Test the home page both as an authenticated and anonymous user.
+
+Legacy settings keep the same keys and are therefore read by the updated version.
+
+## Safety considerations
+
+The configured destination must be an internal Redmine route. An invalid route is logged and leaves the ordinary welcome page visible. Administrators should avoid configuring the welcome action itself as the destination, because that would create a redirect loop.
+
+## Development
+
+The controller extension uses the current Rails preparation callback and `Module#prepend`, so development reloads do not stack duplicate callbacks.
+
+Basic validation against Redmine should cover:
+
+- plugin registration;
+- inactive configuration;
+- redirect without an extra parameter;
+- redirect with an extra parameter;
+- invalid route handling;
+- repeated reload preparation.
+
+## Repository
+
+The canonical repository is [github.com/gatATAC/redmine_startpage](https://github.com/gatATAC/redmine_startpage).
+
+## Licence
+
+Copyright © Txinto Vaz and contributors.
+
+This program is free software under the **GNU General Public License version 3**. See [LICENSE](LICENSE).
