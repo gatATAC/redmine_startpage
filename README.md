@@ -59,18 +59,6 @@ Legacy settings keep the same keys and are therefore read by the updated version
 
 The configured destination must be an internal Redmine route. An invalid route is logged and leaves the ordinary welcome page visible. Administrators should avoid configuring the welcome action itself as the destination, because that would create a redirect loop.
 
-## Development
-
-The controller extension uses the current Rails preparation callback and `Module#prepend`, so development reloads do not stack duplicate callbacks.
-
-Basic validation against Redmine should cover:
-
-- plugin registration;
-- inactive configuration;
-- redirect without an extra parameter;
-- redirect with an extra parameter;
-- invalid route handling;
-- repeated reload preparation.
 
 ## Repository
 
